@@ -79,7 +79,26 @@ class App extends Component {
         <table border="1" className="table table-hover table-dark">
         <thead><tr><th>id</th><th>name</th></tr></thead><tbody>
           {data.map((dat) => (
-                <tr key={dat.id}><td>{ dat.id }</td><td>{ dat.team }</td></tr>
+                <tr key={dat.id}><td>{ dat.id }</td><td>{ dat.team }</td><td>
+                <div>
+                <input
+                  className="form-control"
+                  type="text"
+                  onChange={(e) => this.setState({ updateToApply: e.target.value })}
+                  placeholder="Update team name to..."
+                /><br/>
+                <button
+                  style={{ display: 'block',margin: 'auto' }}
+                  className="btn btn-info"
+                  onClick={() =>
+                    this.updateDB(dat.id, this.state.updateToApply)
+                  }
+                >
+                  UPDATE
+                </button>
+                </div></td><td><button style={{ display: 'block',margin: 'auto' }} className="btn btn-danger" onClick={() => this.deleteTeam(dat.id)}>
+                  DELETE
+                </button></td></tr>
               ))}
         </tbody></table>
         <div style={{ padding: '10px',width: '50%',margin: '0 auto' }}>
@@ -93,39 +112,6 @@ class App extends Component {
             ADD
           </button>
           <hr/>
-        </div>
-        <div style={{ padding: '10px',width: '50%',margin: '0 auto' }}>
-          <input
-            className="form-control"
-            type="text"
-            onChange={(e) => this.setState({ idToDelete: e.target.value })}
-            placeholder="Delete team by id..."
-          /><br/>
-          <button className="form-control" onClick={() => this.deleteTeam(this.state.idToDelete)}>
-            DELETE
-          </button><hr/>
-        </div>
-        <div style={{ padding: '10px',width: '50%',margin: '0 auto' }}>
-          <input
-            className="form-control"
-            type="text"
-            onChange={(e) => this.setState({ idToUpdate: e.target.value })}
-            placeholder="Update team by id..."
-          /><br/>
-          <input
-            className="form-control"
-            type="text"
-            onChange={(e) => this.setState({ updateToApply: e.target.value })}
-            placeholder="Update team name to..."
-          /><br/>
-          <button
-            className="form-control"
-            onClick={() =>
-              this.updateDB(this.state.idToUpdate, this.state.updateToApply)
-            }
-          >
-            UPDATE
-          </button>
         </div>
       </div>
     );
