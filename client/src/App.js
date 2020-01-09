@@ -45,7 +45,7 @@ class App extends Component {
       id: idToBeAdded,
       team: team
     });
-    toastr.success("Team added");
+    toastr.success("Team " +team+" is added.");
   };
 
 
@@ -58,7 +58,7 @@ class App extends Component {
         id: idToDelete,
       },
     });
-    toastr.error("Team with id "+ idToDelete +" is deleted");
+    toastr.error("Team with id "+ idToDelete +" is deleted.");
   };
 
   updateDB = (idToUpdate, updateToApply) => {
@@ -68,7 +68,7 @@ class App extends Component {
       id: idToUpdate,
       team: updateToApply,
     });
-    toastr.success("Team with id "+ idToUpdate +" updated to: " + updateToApply);
+    toastr.success("Team with id "+ idToUpdate +" is updated to: " + updateToApply+".");
   };
 
   render() {
@@ -82,7 +82,7 @@ class App extends Component {
                 <tr key={dat.id}><td>{ dat.id }</td><td>{ dat.team }</td></tr>
               ))}
         </tbody></table>
-        <div style={{ padding: '10px' }}>
+        <div style={{ padding: '10px',width: '50%',margin: '0 auto' }}>
           <input
             className="form-control"
             type="text"
@@ -94,29 +94,29 @@ class App extends Component {
           </button>
           <hr/>
         </div>
-        <div style={{ padding: '10px' }}>
+        <div style={{ padding: '10px',width: '50%',margin: '0 auto' }}>
           <input
             className="form-control"
             type="text"
             onChange={(e) => this.setState({ idToDelete: e.target.value })}
-            placeholder="id of team you want to delete"
+            placeholder="Delete team by id..."
           /><br/>
           <button className="form-control" onClick={() => this.deleteTeam(this.state.idToDelete)}>
             DELETE
           </button><hr/>
         </div>
-        <div style={{ padding: '10px' }}>
+        <div style={{ padding: '10px',width: '50%',margin: '0 auto' }}>
           <input
             className="form-control"
             type="text"
             onChange={(e) => this.setState({ idToUpdate: e.target.value })}
-            placeholder="id of item to update here"
+            placeholder="Update team by id..."
           /><br/>
           <input
             className="form-control"
             type="text"
             onChange={(e) => this.setState({ updateToApply: e.target.value })}
-            placeholder="put new value of the item here"
+            placeholder="Update team name to..."
           /><br/>
           <button
             className="form-control"
