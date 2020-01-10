@@ -6,6 +6,7 @@ import 'toastr/build/toastr.min.css'
 class App extends Component {
   state = {
     data: [],
+    users: [],
     id: 0,
     message: null,
     intervalIsSet: false,
@@ -14,10 +15,11 @@ class App extends Component {
     objectToUpdate: null,
   };
   componentDidMount() {
-    this.getDataFromDb();
+    this.getTeams();
+    this.getUsers();
     console.log("get data called");
     if (!this.state.intervalIsSet) {
-      let interval = setInterval(this.getDataFromDb, 1000);
+      let interval = setInterval(this.getTeams, 1000);
       this.setState({ intervalIsSet: interval });
     }
   }
@@ -28,11 +30,18 @@ class App extends Component {
     }
   }
 
-  getDataFromDb = () => {
+  getTeams = () => {
     fetch('http://localhost:4000/teams')
       .then((data) => data.json())
       .then((res) => this.setState({ data: res }));
   };
+
+  getUsers = () => {
+    fetch('http://localhost:4000/users')
+      .then((users) => users.json())
+      .then((res) => this.setState({ users: res }));
+  };
+
 
   addNewTeam = (team) => {
     let currentIds = this.state.data.map((data) => data.id);
@@ -73,9 +82,17 @@ class App extends Component {
 
   render() {
     const { data } = this.state;
+    const { users } = this.state;
     console.log(this.state);
     return (
       <div>
+        <table border="1" className="table table-hover table-dark">
+        <thead><tr><th>username</th><th>password</th></tr></thead><tbody>
+          {users.map((user) => (
+                <tr key={user.id}><td>{ user.username }</td><td>{ user.password }</td></tr>
+
+              ))}
+        </tbody></table>
         <table border="1" className="table table-hover table-dark">
         <thead><tr><th>id</th><th>name</th></tr></thead><tbody>
           {data.map((dat) => (

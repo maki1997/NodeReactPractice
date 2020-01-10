@@ -6,6 +6,7 @@ const express = require('express'),
 
 
 const mysql = require('mysql');
+
 // connection configurations
 const mc = mysql.createConnection({
     host: 'localhost',
