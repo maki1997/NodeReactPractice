@@ -5,7 +5,7 @@ import 'toastr/build/toastr.min.css'
 
 class App extends Component {
   state = {
-    data: [],
+    teams: [],
     users: [],
     id: 0,
     message: null,
@@ -17,7 +17,6 @@ class App extends Component {
   componentDidMount() {
     this.getTeams();
     this.getUsers();
-    console.log("get data called");
     if (!this.state.intervalIsSet) {
       let interval = setInterval(this.getTeams, 1000);
       this.setState({ intervalIsSet: interval });
@@ -32,8 +31,8 @@ class App extends Component {
 
   getTeams = () => {
     fetch('http://localhost:4000/teams')
-      .then((data) => data.json())
-      .then((res) => this.setState({ data: res }));
+      .then((teams) => teams.json())
+      .then((res) => this.setState({ teams: res }));
   };
 
   getUsers = () => {
@@ -44,7 +43,7 @@ class App extends Component {
 
 
   addNewTeam = (team) => {
-    let currentIds = this.state.data.map((data) => data.id);
+    let currentIds = this.state.teams.map((teams) => teams.id);
     let idToBeAdded = 0;
     while (currentIds.includes(idToBeAdded)) {
       ++idToBeAdded;
@@ -52,7 +51,7 @@ class App extends Component {
 
     axios.post('http://localhost:4000/teams', {
       id: idToBeAdded,
-      team: team
+      name: team
     });
     toastr.success("Team " +team+" is added.");
   };
@@ -63,7 +62,7 @@ class App extends Component {
     console.log("deleting id" + idToDelete);
     parseInt(idToDelete);
     axios.delete(`http://localhost:4000/teams/${idToDelete}`, {
-      data: {
+      teams: {
         id: idToDelete,
       },
     });
@@ -75,13 +74,13 @@ class App extends Component {
 
     axios.put(`http://localhost:4000/teams/${idToUpdate}`, {
       id: idToUpdate,
-      team: updateToApply,
+      name: updateToApply,
     });
     toastr.success("Team with id "+ idToUpdate +" is updated to: " + updateToApply+".");
   };
 
   render() {
-    const { data } = this.state;
+    const { teams } = this.state;
     const { users } = this.state;
     console.log(this.state);
     return (
@@ -95,8 +94,8 @@ class App extends Component {
         </tbody></table>
         <table border="1" className="table table-hover table-dark">
         <thead><tr><th>id</th><th>name</th></tr></thead><tbody>
-          {data.map((dat) => (
-                <tr key={dat.id}><td>{ dat.id }</td><td>{ dat.team }</td><td>
+          {teams.map((dat) => (
+                <tr key={dat.id}><td>{ dat.id }</td><td>{ dat.name }</td><td>
                 <div>
                 <input
                   className="form-control"
