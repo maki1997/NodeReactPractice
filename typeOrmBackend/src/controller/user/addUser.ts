@@ -7,7 +7,12 @@ export async function addUser(request: Request, response: Response) {
 
 
     const userRepo = getManager().getRepository(User);
-    const newUser = userRepo.create(request.body);
+    let { username, password, role } = request.body;
+    let newUser = new User();
+    newUser.username = username;
+    newUser.password = password;
+    newUser.role = role;
+    newUser.hashPassword();
     await userRepo.save(newUser);
     response.send(newUser);
 }

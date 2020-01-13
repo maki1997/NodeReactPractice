@@ -5,7 +5,7 @@ import {Team} from "../../entity/Team";
 
 export async function addTeam(request: Request, response: Response) {
 
-
+    console.log("addteamstart");
     const teamRepo = getManager().getRepository(Team);
     const newTeam = teamRepo.create(request.body);
     await teamRepo.save(newTeam);
