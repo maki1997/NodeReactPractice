@@ -15,9 +15,6 @@ const routing = (
       </button>
       <div className="collapse navbar-collapse" id="navbarNav">
         <ul className="navbar-nav">
-        <li className="nav-item">
-          <a className="nav-link" href="/">Login</a>
-        </li>
           <li className="nav-item">
             <a className="nav-link" href="/teams">Teams</a>
           </li>

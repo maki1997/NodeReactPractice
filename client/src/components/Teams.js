@@ -29,24 +29,21 @@ class Teams extends Component {
   }
 
   getTeams = () => {
-    fetch('http://localhost:4000/teams')
+    fetch('http://localhost:4000/teams',{headers:{"Authorization":localStorage.getItem("token")}},)
       .then((teams) => teams.json())
-      .then((res) => this.setState({ teams: res }));
+      .then((res) => this.setState({ teams: res }))
+      .catch(error => {
+          this.setState({isLoggedOut:true});
+          });;
   };
 
 
 
   addNewTeam = (team) => {
-    let currentIds = this.state.teams.map((teams) => teams.id);
-    let idToBeAdded = 0;
-    while (currentIds.includes(idToBeAdded)) {
-      ++idToBeAdded;
-    }
-
-    axios.post('http://localhost:4000/teams', {
-      id: idToBeAdded,
+    console.log(localStorage.getItem("token"));
+    axios.post('http://localhost:4000/teams',{
       name: team
-    });
+    })
     toastr.success("Team " +team+" is added.");
   };
 
@@ -55,7 +52,7 @@ class Teams extends Component {
   deleteTeam = (idToDelete) => {
     console.log("deleting id" + idToDelete);
     parseInt(idToDelete);
-    axios.delete(`http://localhost:4000/teams/${idToDelete}`, {
+    axios.delete(`http://localhost:4000/teams/${idToDelete}`,{headers:{"Authorization":localStorage.getItem("token")}}, {
       teams: {
         id: idToDelete,
       },
@@ -63,7 +60,7 @@ class Teams extends Component {
     toastr.error("Team with id "+ idToDelete +" is deleted.");
   };
 
-  updateDB = (idToUpdate, updateToApply) => {
+  updateTeam = (idToUpdate, updateToApply) => {
     parseInt(idToUpdate);
 
     axios.put(`http://localhost:4000/teams/${idToUpdate}`, {
@@ -91,7 +88,7 @@ class Teams extends Component {
           {teams.map((dat) => (
                 <tr key={dat.id}><td>{ dat.id }</td><td>{ dat.name }</td><td>
                 <div>
-                
+
                 <input
                   className="form-control"
                   type="text"
@@ -102,7 +99,7 @@ class Teams extends Component {
                   style={{ display: 'block',margin: 'auto' }}
                   className="btn btn-info"
                   onClick={() =>
-                    this.updateDB(dat.id, this.state.updateToApply)
+                    this.updateTeam(dat.id, this.state.updateToApply)
                   }
                 >
                   UPDATE
@@ -123,6 +120,9 @@ class Teams extends Component {
             ADD
           </button>
           <hr/>
+          <button className="form-control" onClick={() => this.logout()}>
+            Logout
+          </button>
         </div>
       </div>
     );

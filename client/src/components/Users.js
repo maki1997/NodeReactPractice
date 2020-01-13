@@ -28,10 +28,15 @@ class Users extends Component {
     }
   }
 
+
+
   getUsers = () => {
-    fetch('http://localhost:4000/users')
+    fetch('http://localhost:4000/users',{headers:{"Authorization":localStorage.getItem("token")}})
       .then((users) => users.json())
-      .then((res) => this.setState({ users: res }));
+      .then((res) => this.setState({ users: res }))
+      .catch(error => {
+          this.setState({isLoggedOut:true});
+          });;;
   };
 
 
@@ -47,7 +52,7 @@ class Users extends Component {
       id: idToBeAdded,
       username: username,
       password: password,
-      role: "ADMIN"
+      role: role
     });
     toastr.success("User " +username+" is added.");
   };
@@ -57,7 +62,7 @@ class Users extends Component {
   deleteUser = (idToDelete) => {
     console.log("deleting id" + idToDelete);
     parseInt(idToDelete);
-    axios.delete(`http://localhost:4000/users/${idToDelete}`, {
+    axios.delete(`http://localhost:4000/users/${idToDelete}`,{headers:{"Authorization":localStorage.getItem("token")}}, {
       users: {
         id: idToDelete,
       },
@@ -128,7 +133,7 @@ class Users extends Component {
             onChange={(e) => this.setState({ password: e.target.value })}
             placeholder="password..."
           /><br/>
-          <select className="form-control">
+          <select className="form-control" onChange={(e) => this.setState({ role: e.target.value })}>
             <option value="ADMIN">ADMIN</option>
             <option value="USER">USER</option>
           </select><br/>
@@ -136,6 +141,9 @@ class Users extends Component {
             ADD
           </button>
           <hr/>
+          <button className="form-control" onClick={() => this.logout()}>
+            Logout
+          </button>
         </div>
       </div>
     );

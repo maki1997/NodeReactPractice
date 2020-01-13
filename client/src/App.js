@@ -7,7 +7,6 @@ import { Redirect as Redirect } from 'react-router-dom';
 
 class App extends Component {
   state = {
-    token: "",
     id: 0,
     message: null,
     intervalIsSet: false,
