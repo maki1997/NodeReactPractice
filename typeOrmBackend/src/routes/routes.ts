@@ -26,7 +26,7 @@ import PlayerController from "../controller/PlayerController";
   router.delete("/users/:id",[checkJwt, checkRole(["ADMIN","USER"])] ,UserController.deleteUser);
   //users
   router.get("/players",[checkJwt, checkRole(["ADMIN","USER"])] ,PlayerController.getAllPlayers);
-  router.post("/players",PlayerController.addPlayer);
+  router.post("/players",[checkJwt, checkRole(["ADMIN","USER"])],PlayerController.addPlayer);
 
 
   export default router;

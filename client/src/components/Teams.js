@@ -40,6 +40,7 @@ class Teams extends Component {
 
 
   addNewTeam = (team) => {
+    axios.defaults.headers.common['Authorization'] = localStorage.getItem("token");
     console.log(localStorage.getItem("token"));
     axios.post('http://localhost:4000/teams',{
       name: team
@@ -51,8 +52,9 @@ class Teams extends Component {
 
   deleteTeam = (idToDelete) => {
     console.log("deleting id" + idToDelete);
+    axios.defaults.headers.common['Authorization'] = localStorage.getItem("token");
     parseInt(idToDelete);
-    axios.delete(`http://localhost:4000/teams/${idToDelete}`,{headers:{"Authorization":localStorage.getItem("token")}}, {
+    axios.delete(`http://localhost:4000/teams/${idToDelete}`, {
       teams: {
         id: idToDelete,
       },
@@ -61,8 +63,8 @@ class Teams extends Component {
   };
 
   updateTeam = (idToUpdate, updateToApply) => {
+    axios.defaults.headers.common['Authorization'] = localStorage.getItem("token");
     parseInt(idToUpdate);
-
     axios.put(`http://localhost:4000/teams/${idToUpdate}`, {
       id: idToUpdate,
       name: updateToApply,

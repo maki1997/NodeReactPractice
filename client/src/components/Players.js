@@ -48,6 +48,7 @@ class Players extends Component {
 
   addPlayer = (firstname,lastname,teamName) => {
     console.log(localStorage.getItem("token"));
+    axios.defaults.headers.common['Authorization'] = localStorage.getItem("token");
     axios.post('http://localhost:4000/players',{
       firstname: firstname,
       lastname: lastname,

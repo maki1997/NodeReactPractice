@@ -42,8 +42,8 @@ class Users extends Component {
 
   addNewUser = (username,password,role,myTeam) => {
     console.log(username + password + role + myTeam);
-
-    axios.post('http://localhost:4000/users',{headers:{"Authorization":localStorage.getItem("token")}}, {
+    axios.defaults.headers.common['Authorization'] = localStorage.getItem("token");
+    axios.post('http://localhost:4000/users', {
       username: username,
       password: password,
       role: role,
@@ -55,9 +55,10 @@ class Users extends Component {
 
 
   deleteUser = (idToDelete) => {
+    axios.defaults.headers.common['Authorization'] = localStorage.getItem("token");
     console.log("deleting id" + idToDelete);
     parseInt(idToDelete);
-    axios.delete(`http://localhost:4000/users/${idToDelete}`,{headers:{"Authorization":localStorage.getItem("token")}}, {
+    axios.delete(`http://localhost:4000/users/${idToDelete}`, {
       users: {
         id: idToDelete,
       },
@@ -66,6 +67,7 @@ class Users extends Component {
   };
 
   updateUser = (idToUpdate, updateToApply) => {
+    axios.defaults.headers.common['Authorization'] = localStorage.getItem("token");
     parseInt(idToUpdate);
     axios.put(`http://localhost:4000/users/${idToUpdate}`, {
       id: idToUpdate,
