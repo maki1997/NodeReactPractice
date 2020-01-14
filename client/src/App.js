@@ -36,8 +36,7 @@ class App extends Component {
     }).then(function(res){
         if (res.status = 200) {
           localStorage.setItem("token",res.data);
-          //this.setState({ isLogged: true });
-          toastr.success("Successful login!!!")
+          console.log(JSON.stringify(res));
         }
      })
      .then((res)=>this.setState({ isLogged: true }))

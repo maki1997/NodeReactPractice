@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { getRepository } from "typeorm";
 import { User } from "../entity/User";
+import {getManager} from "typeorm";
 
 export const checkRole = (roles: Array<string>) => {
   return async (req: Request, res: Response, next: NextFunction) => {
@@ -8,7 +9,7 @@ export const checkRole = (roles: Array<string>) => {
     const id = res.locals.jwtPayload.userId;
 
     //Get user role from the database
-    const userRepository = getRepository(User);
+    const userRepository = getManager().getRepository(User);
     let user: User;
     try {
       user = await userRepository.findOneOrFail(id);

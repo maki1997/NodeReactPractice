@@ -40,19 +40,14 @@ class Users extends Component {
   };
 
 
-  addNewUser = (username,password,role) => {
-    console.log(username + password + role);
-    let currentIds = this.state.users.map((users) => users.id);
-    let idToBeAdded = 0;
-    while (currentIds.includes(idToBeAdded)) {
-      ++idToBeAdded;
-    }
+  addNewUser = (username,password,role,myTeam) => {
+    console.log(username + password + role + myTeam);
 
     axios.post('http://localhost:4000/users', {
-      id: idToBeAdded,
       username: username,
       password: password,
-      role: role
+      role: role,
+      myTeam: myTeam
     });
     toastr.success("User " +username+" is added.");
   };
@@ -92,13 +87,14 @@ class Users extends Component {
       return <Redirect to = {{ pathname: "/" }} />;
     };
     const { users } = this.state;
+    console.log(users);
     console.log(this.state);
     return (
       <div>
         <table border="1" className="table table-hover table-dark">
-        <thead><tr><th>name</th><th>role</th><th></th></tr></thead><tbody>
+        <thead><tr><th>name</th><th>role</th><th>my team</th><th></th></tr></thead><tbody>
           {users.map((dat) => (
-                <tr key={dat.id}><td>{ dat.username }</td><td>{ dat.role }</td><td>
+                <tr key={dat.id}><td>{ dat.username }</td><td>{ dat.role }</td><td>{ dat.myTeam.name }</td><td>
                 <div>
                 <input
                   className="form-control"
@@ -137,7 +133,13 @@ class Users extends Component {
             <option value="ADMIN">ADMIN</option>
             <option value="USER">USER</option>
           </select><br/>
-          <button className="form-control" onClick={() => this.addNewUser(this.state.username,this.state.password,this.state.role)}>
+          <input
+            className="form-control"
+            type="text"
+            onChange={(e) => this.setState({ myTeam: e.target.value })}
+            placeholder="team..."
+          /><br/>
+          <button className="form-control" onClick={() => this.addNewUser(this.state.username,this.state.password,this.state.role,this.state.myTeam)}>
             ADD
           </button>
           <hr/>
