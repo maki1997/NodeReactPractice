@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import toastr from 'toastr'
 import 'toastr/build/toastr.min.css'
-import { Redirect as Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 
 class Players extends Component {
   state = {

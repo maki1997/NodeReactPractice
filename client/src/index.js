@@ -4,7 +4,7 @@ import App from './App';
 import Teams from './components/Teams';
 import Users from './components/Users';
 import Players from './components/Players';
-import { Route, Link, BrowserRouter as Router } from 'react-router-dom';
+import { Route, BrowserRouter as Router } from 'react-router-dom';
 import * as serviceWorker from './serviceWorker';
 import 'bootstrap/dist/css/bootstrap.min.css';
 

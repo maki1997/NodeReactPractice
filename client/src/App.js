@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import toastr from 'toastr';
-import { toast } from 'react-toastify';
 import 'toastr/build/toastr.min.css';
-import { Redirect as Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 
 class App extends Component {
   state = {
@@ -34,7 +32,7 @@ class App extends Component {
       username: username,
       password: password
     }).then(function(res){
-        if (res.status = 200) {
+        if (res.status === 200) {
           localStorage.setItem("token",res.data);
           console.log(JSON.stringify(res));
         }
