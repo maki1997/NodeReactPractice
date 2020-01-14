@@ -17,6 +17,7 @@ class Players extends Component {
   };
   componentDidMount() {
     this.getPlayers();
+    this.getTeams();
     if (!this.state.intervalIsSet) {
       let interval = setInterval(this.getTeams, 1000);
       this.setState({ intervalIsSet: interval });
@@ -36,13 +37,16 @@ class Players extends Component {
       .catch(error => {
           this.setState({isLoggedOut:true});
           });;
-    fetch('http://localhost:4000/teams',{headers:{"Authorization":localStorage.getItem("token")}},)
-      .then((teams) => teams.json())
-      .then((res) => this.setState({ teams: res }))
-      .catch(error => {
-          this.setState({isLoggedOut:true});
-          });;
   };
+
+  getTeams = () => {
+  fetch('http://localhost:4000/teams',{headers:{"Authorization":localStorage.getItem("token")}},)
+    .then((teams) => teams.json())
+    .then((res) => this.setState({ teams: res }))
+    .catch(error => {
+        this.setState({isLoggedOut:true});
+        });;
+      };
 
 
 

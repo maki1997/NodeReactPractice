@@ -23,6 +23,20 @@ class TeamController{
     response.send(team);
   };
 
+  static getTeamByName = async(request: Request, response: Response) => {
+      const teamRepo = getManager().getRepository(Team);
+      const param = request.params.teamName;
+      const team = await teamRepo.query("Select * from team where name='"+param+"'");
+      console.log(team);
+      if (!team) {
+          response.status(404);
+          response.end();
+          return;
+      }
+
+      response.send(team);
+  };
+
   static addTeam = async(request: Request, response: Response) => {
 
       console.log("addteamstart");

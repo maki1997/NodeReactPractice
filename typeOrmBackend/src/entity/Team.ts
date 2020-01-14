@@ -7,10 +7,12 @@ export class Team {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column()
+    @Column({unique:true})
     name: string;
 
-    @OneToMany(type => Player, player => player.team) // note: we will create author property in the Photo class below
+    @OneToMany(type => Player, player => player.team,{
+        cascade: true,
+    })
     players: Player[];
 
 

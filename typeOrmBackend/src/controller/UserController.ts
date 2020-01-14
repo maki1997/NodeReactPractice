@@ -2,6 +2,7 @@ import {Request, Response} from "express";
 import {getManager} from "typeorm";
 import {User} from "../entity/User";
 import {Team} from "../entity/Team";
+import {UserRepository} from "../repository/UserRepository"
 
 class UserController{
   static getAllUsers = async (request: Request, response: Response) => {
@@ -18,6 +19,21 @@ class UserController{
 
       const userRepo = getManager().getRepository(User);
       const user = await userRepo.findOne(request.params.id);
+      if (!user) {
+          response.status(404);
+          response.end();
+          return;
+      }
+
+      response.send(user);
+  };
+
+  static getUserByUsername = async(request: Request, response: Response) => {
+      const userRepo = getManager().getRepository(User);
+      const param = request.params.username;
+      const user = await userRepo.query("Select * from user where username='"+param+"'");
+      console.log(request.params.username);
+      console.log(user);
       if (!user) {
           response.status(404);
           response.end();

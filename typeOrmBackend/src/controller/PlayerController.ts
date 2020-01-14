@@ -23,16 +23,23 @@ class PlayerController{
       let newPlayer = new Player();
       let existingTeam: Team;
       try {
-        //dodaje uvek crvena zvezda tj prvi na koji naidje
-        existingTeam = await teamRepo.findOneOrFail({ where: { teamName } });
-        console.log(JSON.stringify(existingTeam));
+        const teamRepo = getManager().getRepository(Team);
+        const team = await teamRepo.query("Select * from team where name='"+teamName+"'");
+        existingTeam = team;
+        console.log(team);
+        if (!team) {
+            response.status(404);
+            response.end();
+            return;
+        }
       } catch (error) {
         console.log("error");
       }
-      console.log("ex team name"+existingTeam.name);
+      console.log("esese "+existingTeam);
       newPlayer.firstname = body.firstname;
       newPlayer.lastname = body.lastname;
       newPlayer.team = existingTeam;
+      console.log(JSON.stringify(newPlayer));
       await playerRepo.save(newPlayer);
       response.send(newPlayer);
   };
