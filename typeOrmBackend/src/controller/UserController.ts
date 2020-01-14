@@ -27,19 +27,6 @@ class UserController{
       response.send(user);
   };
 
-  /*static getUserByUsername = async(request: Request, response: Response) => {
-      const userRepository = getManager().getRepository(User);
-      let user: User;
-      user = await userRepository.findOneOrFail({ where: { username } });
-      if (!user) {
-          response.status(404);
-          response.end();
-          return;
-      }
-
-      response.send(user);
-  };*/
-
   static addUser = async(request: Request, response: Response) => {
 
       const userRepo = getManager().getRepository(User);

@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import Teams from './components/Teams';
 import Users from './components/Users';
+import Players from './components/Players';
 import { Route, Link, BrowserRouter as Router } from 'react-router-dom';
 import * as serviceWorker from './serviceWorker';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -21,6 +22,9 @@ const routing = (
           <li className="nav-item">
             <a className="nav-link" href="/users">Users</a>
           </li>
+          <li className="nav-item">
+            <a className="nav-link" href="/players">Players</a>
+          </li>
         </ul>
       </div>
     </nav>
@@ -29,6 +33,7 @@ const routing = (
       <Route exact path="/" component={App}  />
       <Route path="/users" component={Users} />
       <Route path="/teams" component={Teams} />
+      <Route path="/players" component={Players} />
     </div>
   </Router>
 )

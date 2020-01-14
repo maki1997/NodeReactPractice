@@ -43,7 +43,7 @@ class Users extends Component {
   addNewUser = (username,password,role,myTeam) => {
     console.log(username + password + role + myTeam);
 
-    axios.post('http://localhost:4000/users', {
+    axios.post('http://localhost:4000/users',{headers:{"Authorization":localStorage.getItem("token")}}, {
       username: username,
       password: password,
       role: role,

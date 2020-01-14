@@ -4,6 +4,7 @@ import { checkRole } from "../middlewares/checkRole";
 import UserController from "../controller/UserController";
 import AuthController from "../controller/AuthController";
 import TeamController from "../controller/TeamController";
+import PlayerController from "../controller/PlayerController";
 
   const router = Router();
 
@@ -23,6 +24,9 @@ import TeamController from "../controller/TeamController";
   router.get("/users/:id",UserController.getUserById);
   router.put("/users/:id",[checkJwt, checkRole(["ADMIN","USER"])] ,UserController.updateUser);
   router.delete("/users/:id",[checkJwt, checkRole(["ADMIN","USER"])] ,UserController.deleteUser);
+  //users
+  router.get("/players",[checkJwt, checkRole(["ADMIN","USER"])] ,PlayerController.getAllPlayers);
+  router.post("/players",PlayerController.addPlayer);
 
 
   export default router;
