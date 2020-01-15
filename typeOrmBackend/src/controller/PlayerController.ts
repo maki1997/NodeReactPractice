@@ -21,12 +21,12 @@ class PlayerController{
       const teamName = body.teamName;
       console.log("team name dosao"+teamName);
       let newPlayer = new Player();
-      let existingTeam: Team;
+      let eteam: Team;
       try {
         const teamRepo = getManager().getRepository(Team);
-        const team = await teamRepo.query("Select * from team where name='"+teamName+"'");
-        existingTeam = team;
-        console.log(team);
+        const team = await teamRepo.findOne({name: teamName});
+        eteam = team;
+        console.log("team: "+JSON.stringify(team));
         if (!team) {
             response.status(404);
             response.end();
@@ -35,14 +35,16 @@ class PlayerController{
       } catch (error) {
         console.log("error");
       }
-      console.log("esese "+existingTeam);
       newPlayer.firstname = body.firstname;
       newPlayer.lastname = body.lastname;
-      newPlayer.team = existingTeam;
-      console.log(JSON.stringify(newPlayer));
+      newPlayer.team = eteam;
+      console.log("eteam "+JSON.stringify(eteam) );
+      console.log("new player "+JSON.stringify(newPlayer));
       await playerRepo.save(newPlayer);
       response.send(newPlayer);
   };
+
+
 
 
 }

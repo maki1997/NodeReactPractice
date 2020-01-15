@@ -16,8 +16,8 @@ class Players extends Component {
     objectToUpdate: null,
   };
   componentDidMount() {
+    //this.getTeams();
     this.getPlayers();
-    this.getTeams();
     if (!this.state.intervalIsSet) {
       let interval = setInterval(this.getTeams, 1000);
       this.setState({ intervalIsSet: interval });
