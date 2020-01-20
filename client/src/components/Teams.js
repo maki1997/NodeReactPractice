@@ -29,7 +29,7 @@ class Teams extends Component {
   }
 
   getTeams = () => {
-    fetch('http://localhost:4000/teams',{headers:{"Authorization":localStorage.getItem("token")}},)
+    fetch('http://localhost:4000/v1/teams',{headers:{"Authorization":localStorage.getItem("token")}},)
       .then((teams) => teams.json())
       .then((res) => this.setState({ teams: res }))
       .catch(error => {
@@ -42,7 +42,7 @@ class Teams extends Component {
   addNewTeam = (team) => {
     axios.defaults.headers.common['Authorization'] = localStorage.getItem("token");
     console.log(localStorage.getItem("token"));
-    axios.post('http://localhost:4000/teams',{
+    axios.post('http://localhost:4000/v1/teams',{
       name: team
     })
     toastr.success("Team " +team+" is added.");
@@ -54,7 +54,7 @@ class Teams extends Component {
     console.log("deleting id" + idToDelete);
     axios.defaults.headers.common['Authorization'] = localStorage.getItem("token");
     parseInt(idToDelete);
-    axios.delete(`http://localhost:4000/teams/${idToDelete}`, {
+    axios.delete(`http://localhost:4000/v1/teams/${idToDelete}`, {
       teams: {
         id: idToDelete,
       },
@@ -65,7 +65,7 @@ class Teams extends Component {
   updateTeam = (idToUpdate, updateToApply) => {
     axios.defaults.headers.common['Authorization'] = localStorage.getItem("token");
     parseInt(idToUpdate);
-    axios.put(`http://localhost:4000/teams/${idToUpdate}`, {
+    axios.put(`http://localhost:4000/v1/teams/${idToUpdate}`, {
       id: idToUpdate,
       name: updateToApply,
     });

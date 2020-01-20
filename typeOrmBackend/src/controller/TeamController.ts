@@ -10,14 +10,14 @@ class TeamController extends BaseController{
   }
 
   protected registerRoutes(): void {
-
+  // get all teams
   this.get("",async(request,response) => {
 
       const teamRepo = getManager().getRepository(Team);
       const teams = await teamRepo.find()
       response.send(teams);
   });
-
+  // get team by id
   this.get(":id",async(request,response) => {
 
     const teamRepo = getManager().getRepository(Team);
@@ -29,7 +29,7 @@ class TeamController extends BaseController{
     }
     response.send(team);
   });
-
+  // get team by teamname
   this.get("teamName/:teamName",async(request,response) => {
       const teamRepo = getManager().getRepository(Team);
       const param = request.params.teamName;
@@ -43,7 +43,7 @@ class TeamController extends BaseController{
 
       response.send(team);
   });
-
+  // add team
   this.post("",async(request,response) => {
 
       console.log("addteamstart");
@@ -52,7 +52,7 @@ class TeamController extends BaseController{
       await teamRepo.save(newTeam);
       response.send(newTeam);
   });
-
+  // delete team
   this.delete(":id",async(request,response) => {
 
       const teamRepo = getManager().getRepository(Team);
@@ -67,7 +67,7 @@ class TeamController extends BaseController{
 
       response.send("deleted team" + JSON.stringify(team));
   });
-
+  // edit team
   this.put(":id",async(request,response) => {
 
       const teamRepo = getManager().getRepository(Team);

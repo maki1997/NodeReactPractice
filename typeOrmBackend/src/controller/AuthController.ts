@@ -13,14 +13,12 @@ export class AuthController extends BaseController{
   }
 
   protected registerRoutes(): void {
+    // login
     this.post("",async(req, res) => {
-      //Check if username and password are set
       let { username, password } = req.body;
       if (!(username && password)) {
         res.status(400).send();
       }
-
-      //Get user from database
       const userRepository = getRepository(User);
       let user: User;
       try {
@@ -29,8 +27,6 @@ export class AuthController extends BaseController{
       } catch (error) {
         res.status(401).send();
       }
-
-      //Check if encrypted password match
       console.log("userpass: " + password);
       if (!user.checkIfUnencryptedPasswordIsValid(password)) {
         res.status(401).send();

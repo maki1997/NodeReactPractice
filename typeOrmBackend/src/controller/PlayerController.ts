@@ -11,7 +11,7 @@ export class PlayerController extends BaseController{
   }
 
   protected registerRoutes(): void {
-
+  // get all players
   this.get("",async (request,response) => {
 
       const playerRepo = getManager().getRepository(Player);
@@ -20,7 +20,7 @@ export class PlayerController extends BaseController{
   });
 
 
-
+  // add player
   this.post("",async(request,response) => {
       const teamRepo = getManager().getRepository(Team);
       const playerRepo = getManager().getRepository(Player);

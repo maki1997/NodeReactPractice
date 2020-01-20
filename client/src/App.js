@@ -28,7 +28,7 @@ class App extends Component {
   }
 
   login = (username,password) => {
-    axios.post('http://localhost:4000/login', {
+    axios.post('http://localhost:4000/v1/login', {
       username: username,
       password: password
     }).then(function(res){

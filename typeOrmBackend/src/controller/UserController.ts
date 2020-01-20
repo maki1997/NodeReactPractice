@@ -12,7 +12,7 @@ export class UserController extends BaseController{
   }
 
   protected registerRoutes(): void {
-
+  // get all users
   this.get("",async(request,response) => {
 
       const userRepo = getManager().getRepository(User);
@@ -22,7 +22,7 @@ export class UserController extends BaseController{
       console.log(JSON.stringify(users));
       response.send(rels);
   });
-
+  // get user by id
   this.get(":id",async(request,response) => {
 
       const userRepo = getManager().getRepository(User);
@@ -35,7 +35,7 @@ export class UserController extends BaseController{
 
       response.send(user);
   });
-
+  // get user by username
   this.get("username/:username",async(request,response) => {
       const userRepo = getManager().getRepository(User);
       const param = request.params.username;
@@ -50,7 +50,7 @@ export class UserController extends BaseController{
 
       response.send(user);
   });
-
+  // add user
   this.post("",async(request,response) => {
 
       const userRepo = getManager().getRepository(User);
@@ -69,8 +69,8 @@ export class UserController extends BaseController{
       await userRepo.save(newUser);
       response.send(newUser);
   });
-
-this.delete(":id",async(request,response) => {
+  // delete user
+  this.delete(":id",async(request,response) => {
 
       const userRepo = getManager().getRepository(User);
       const user = await userRepo.findOne(request.params.id);
@@ -84,7 +84,7 @@ this.delete(":id",async(request,response) => {
 
       response.send("deleted user" + JSON.stringify(user));
   });
-
+  // edit user
   this.put(":id",async(request,response) => {
 
       const userRepo = getManager().getRepository(User);

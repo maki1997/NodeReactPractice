@@ -31,7 +31,7 @@ class Players extends Component {
   }
 
   getPlayers = () => {
-    fetch('http://localhost:4000/players',{headers:{"Authorization":localStorage.getItem("token")}},)
+    fetch('http://localhost:4000/v1/players',{headers:{"Authorization":localStorage.getItem("token")}},)
       .then((players) => players.json())
       .then((res) => this.setState({ players: res }))
       .catch(error => {
@@ -40,7 +40,7 @@ class Players extends Component {
   };
 
   getTeams = () => {
-  fetch('http://localhost:4000/teams',{headers:{"Authorization":localStorage.getItem("token")}},)
+  fetch('http://localhost:4000/v1/teams',{headers:{"Authorization":localStorage.getItem("token")}},)
     .then((teams) => teams.json())
     .then((res) => this.setState({ teams: res }))
     .catch(error => {
@@ -53,7 +53,7 @@ class Players extends Component {
   addPlayer = (firstname,lastname,teamName) => {
     console.log(localStorage.getItem("token"));
     axios.defaults.headers.common['Authorization'] = localStorage.getItem("token");
-    axios.post('http://localhost:4000/players',{
+    axios.post('http://localhost:4000/v1/players',{
       firstname: firstname,
       lastname: lastname,
       teamName: teamName
