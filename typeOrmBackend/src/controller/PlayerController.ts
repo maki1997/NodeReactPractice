@@ -1,20 +1,27 @@
-import {Request, Response} from "express";
+import express from "express";
 import {getManager} from "typeorm";
 import {Team} from "../entity/Team";
 import {Player} from "../entity/Player";
+import BaseController from "./BaseController";
 
-class PlayerController{
+export class PlayerController extends BaseController{
 
-  static getAllPlayers = async(request: Request, response: Response) => {
+  constructor(router: express.Router, protected baseRoute: string = "") {
+      super(router, baseRoute);
+  }
+
+  protected registerRoutes(): void {
+
+  this.get("",async (request,response) => {
 
       const playerRepo = getManager().getRepository(Player);
       const players = await playerRepo.find({relations: ["team"]});
       response.send(players);
-  };
+  });
 
 
 
-  static addPlayer = async(request: Request, response: Response) => {
+  this.post("",async(request,response) => {
       const teamRepo = getManager().getRepository(Team);
       const playerRepo = getManager().getRepository(Player);
       const body = request.body;
@@ -42,10 +49,10 @@ class PlayerController{
       console.log("new player "+JSON.stringify(newPlayer));
       await playerRepo.save(newPlayer);
       response.send(newPlayer);
-  };
+  });
 
 
-
+}
 
 }
 export default PlayerController;

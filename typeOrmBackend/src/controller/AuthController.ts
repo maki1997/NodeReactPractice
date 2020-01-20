@@ -1,12 +1,19 @@
-import { Request, Response } from "express";
+import express from "express";
 import * as jwt from "jsonwebtoken";
 import { getRepository } from "typeorm";
 import { validate } from "class-validator";
 import { User } from "../entity/User";
-import config from "../config/config";
+import config from "../config/tsconfig.json";
+import BaseController from "./BaseController";
 
-  class AuthController {
-    static login = async(req: Request, res: Response) => {
+export class AuthController extends BaseController{
+
+  constructor(router: express.Router, protected baseRoute: string = "") {
+      super(router, baseRoute);
+  }
+
+  protected registerRoutes(): void {
+    this.post("",async(req, res) => {
       //Check if username and password are set
       let { username, password } = req.body;
       if (!(username && password)) {
@@ -39,9 +46,9 @@ import config from "../config/config";
 
       //Send the jwt in the response
       res.send(token);
-    };
+    });
 
-    static changePassword = async(req: Request, res: Response) => {
+    this.post("",async (req, res) => {
       //Get ID from JWT
       const id = res.locals.jwtPayload.userId;
 
@@ -78,7 +85,8 @@ import config from "../config/config";
       userRepository.save(user);
 
       res.status(204).send();
-    };
+    });
   }
+}
 
 export default AuthController;

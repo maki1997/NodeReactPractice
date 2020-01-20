@@ -1,0 +1,36 @@
+{
+    "defaultSeverity": "error",
+    "extends": [
+        "tslint:recommended"
+    ],
+    "jsRules": {},
+    "linterOptions": {
+        "exclude": [
+            "node_modules/**"
+        ]
+    },
+    "rules": {
+        "no-empty": [false],
+        "interface-name": [false],
+        "no-console": [false],
+        "quotemark": [false],
+        "no-duplicate-variable": [true, "check-parameters"],
+        "no-shadowed-variable": true,
+        "no-this-assignment": true,
+        "no-duplicate-imports": true,
+        "no-var-keyword": true,
+        "no-unused-expression": true,
+        "no-irregular-whitespace": true,
+        "no-trailing-whitespace": [true, "ignore-comments"],
+        "semicolon": [true, "always"],
+        "indent": [true, "spaces", 4],
+        "trailing-comma": [false],
+        "ordered-imports": false,
+        "comment-format": [false],
+        "arrow-parens": false,
+        "variable-name": [true, "ban-keywords", "check-format", "allow-leading-underscore", "allow-pascal-case"],
+        "max-line-length": [true, 160],
+        "object-literal-sort-keys": false
+    },
+    "rulesDirectory": []
+}

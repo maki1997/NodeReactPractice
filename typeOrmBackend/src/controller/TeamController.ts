@@ -1,17 +1,24 @@
-import {Request, Response} from "express";
+import BaseController from "./BaseController";
+import express from "express";
 import {getManager} from "typeorm";
 import {Team} from "../entity/Team";
 
-class TeamController{
+class TeamController extends BaseController{
 
-  static getAllTeams = async(request: Request, response: Response) => {
+  constructor(router: express.Router, protected baseRoute: string = "") {
+      super(router, baseRoute);
+  }
+
+  protected registerRoutes(): void {
+
+  this.get("",async(request,response) => {
 
       const teamRepo = getManager().getRepository(Team);
       const teams = await teamRepo.find()
       response.send(teams);
-  };
+  });
 
-  static getTeamById = async(request: Request, response: Response) => {
+  this.get(":id",async(request,response) => {
 
     const teamRepo = getManager().getRepository(Team);
     const team = await teamRepo.findOne(request.params.id);
@@ -21,9 +28,9 @@ class TeamController{
         return;
     }
     response.send(team);
-  };
+  });
 
-  static getTeamByName = async(request: Request, response: Response) => {
+  this.get("teamName/:teamName",async(request,response) => {
       const teamRepo = getManager().getRepository(Team);
       const param = request.params.teamName;
       const team = await teamRepo.query("Select * from team where name='"+param+"'");
@@ -35,18 +42,18 @@ class TeamController{
       }
 
       response.send(team);
-  };
+  });
 
-  static addTeam = async(request: Request, response: Response) => {
+  this.post("",async(request,response) => {
 
       console.log("addteamstart");
       const teamRepo = getManager().getRepository(Team);
       const newTeam = teamRepo.create(request.body);
       await teamRepo.save(newTeam);
       response.send(newTeam);
-  };
+  });
 
-  static deleteTeam = async(request: Request, response: Response) => {
+  this.delete(":id",async(request,response) => {
 
       const teamRepo = getManager().getRepository(Team);
       const team = await teamRepo.findOne(request.params.id);
@@ -59,9 +66,9 @@ class TeamController{
       }
 
       response.send("deleted team" + JSON.stringify(team));
-  };
+  });
 
-  static updateTeam = async(request: Request, response: Response) => {
+  this.put(":id",async(request,response) => {
 
       const teamRepo = getManager().getRepository(Team);
       const team = await teamRepo.findOne(request.params.id);
@@ -78,6 +85,7 @@ class TeamController{
 
 
       response.send(team);
-  }
+  });
+}
 }
 export default TeamController;

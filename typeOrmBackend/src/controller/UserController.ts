@@ -1,11 +1,19 @@
-import {Request, Response} from "express";
+import BaseController from "./BaseController";
+import express from "express";
 import {getManager} from "typeorm";
 import {User} from "../entity/User";
 import {Team} from "../entity/Team";
 import {UserRepository} from "../repository/UserRepository"
 
-class UserController{
-  static getAllUsers = async (request: Request, response: Response) => {
+export class UserController extends BaseController{
+
+  constructor(router: express.Router, protected baseRoute: string = "") {
+      super(router, baseRoute);
+  }
+
+  protected registerRoutes(): void {
+
+  this.get("",async(request,response) => {
 
       const userRepo = getManager().getRepository(User);
       const users = await userRepo.find({select: ["id","username","role"]});
@@ -13,9 +21,9 @@ class UserController{
       console.log(JSON.stringify(rels));
       console.log(JSON.stringify(users));
       response.send(rels);
-  };
+  });
 
-  static getUserById = async(request: Request, response: Response) => {
+  this.get(":id",async(request,response) => {
 
       const userRepo = getManager().getRepository(User);
       const user = await userRepo.findOne(request.params.id);
@@ -26,9 +34,9 @@ class UserController{
       }
 
       response.send(user);
-  };
+  });
 
-  static getUserByUsername = async(request: Request, response: Response) => {
+  this.get("username/:username",async(request,response) => {
       const userRepo = getManager().getRepository(User);
       const param = request.params.username;
       const user = await userRepo.query("Select * from user where username='"+param+"'");
@@ -41,9 +49,9 @@ class UserController{
       }
 
       response.send(user);
-  };
+  });
 
-  static addUser = async(request: Request, response: Response) => {
+  this.post("",async(request,response) => {
 
       const userRepo = getManager().getRepository(User);
       const teamRepo = getManager().getRepository(Team);
@@ -60,9 +68,9 @@ class UserController{
       await teamRepo.save(newTeam);
       await userRepo.save(newUser);
       response.send(newUser);
-  };
+  });
 
-static deleteUser = async(request: Request, response: Response) => {
+this.delete(":id",async(request,response) => {
 
       const userRepo = getManager().getRepository(User);
       const user = await userRepo.findOne(request.params.id);
@@ -75,9 +83,9 @@ static deleteUser = async(request: Request, response: Response) => {
       }
 
       response.send("deleted user" + JSON.stringify(user));
-  };
+  });
 
-  static updateUser = async(request: Request, response: Response) => {
+  this.put(":id",async(request,response) => {
 
       const userRepo = getManager().getRepository(User);
       const user = await userRepo.findOne(request.params.id);
@@ -97,7 +105,8 @@ static deleteUser = async(request: Request, response: Response) => {
 
 
       response.send(user);
-  };
+  });
+}
 }
 
 

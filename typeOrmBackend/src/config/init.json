@@ -1,0 +1,18 @@
+{
+  "controllers":[
+    {"route": "/users",
+    "name": "UserController"
+    },
+    {
+        "route": "/players",
+        "name": "PlayerController"
+    },
+    {
+        "route": "/teams",
+        "name": "TeamController"
+    },
+    {
+        "route": "/login",
+        "name": "AuthController"
+    }]
+}
