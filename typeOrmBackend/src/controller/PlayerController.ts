@@ -26,14 +26,12 @@ export class PlayerController extends BaseController{
       const playerRepo = getManager().getRepository(Player);
       const body = request.body;
       const teamName = body.teamName;
-      console.log("team name dosao"+teamName);
       let newPlayer = new Player();
       let eteam: Team;
       try {
         const teamRepo = getManager().getRepository(Team);
         const team = await teamRepo.findOne({name: teamName});
         eteam = team;
-        console.log("team: "+JSON.stringify(team));
         if (!team) {
             response.status(404);
             response.end();
@@ -45,8 +43,6 @@ export class PlayerController extends BaseController{
       newPlayer.firstname = body.firstname;
       newPlayer.lastname = body.lastname;
       newPlayer.team = eteam;
-      console.log("eteam "+JSON.stringify(eteam) );
-      console.log("new player "+JSON.stringify(newPlayer));
       await playerRepo.save(newPlayer);
       response.send(newPlayer);
   });

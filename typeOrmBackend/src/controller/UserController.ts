@@ -18,8 +18,6 @@ export class UserController extends BaseController{
       const userRepo = getManager().getRepository(User);
       const users = await userRepo.find({select: ["id","username","role"]});
       const rels = await userRepo.find({relations: ["myTeam"]});
-      console.log(JSON.stringify(rels));
-      console.log(JSON.stringify(users));
       response.send(rels);
   });
   // get user by id
