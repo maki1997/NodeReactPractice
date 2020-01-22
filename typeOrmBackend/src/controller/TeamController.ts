@@ -33,7 +33,7 @@ class TeamController extends BaseController{
   this.get("teamName/:teamName",async(request,response) => {
       const teamRepo = getManager().getRepository(Team);
       const param = request.params.teamName;
-      const team = await teamRepo.query("Select * from team where name='"+param+"'");
+      const team = await teamRepo.query("Select * from team where name like '"+param+"'");
       console.log(team);
       if (!team) {
           response.status(404);

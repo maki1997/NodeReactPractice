@@ -20,7 +20,7 @@ export default class Routes {
         console.log("-------------- Routes " + this.router.stack.length + " -------------");
         this.router.stack.forEach(route => {
             if (route.route) {
-                console.log(Object.keys(route.route.methods), "/" + APP_VERSION + route.route.path, "match =>", route.regexp);
+                console.log(Object.keys(route.route.methods), "/" + APP_VERSION + route.route.path);//, "match =>", route.regexp
             }
         });
         console.log("-------------- End Routes --------------");

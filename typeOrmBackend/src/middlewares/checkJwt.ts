@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import * as jwt from "jsonwebtoken";
 import config from "../config/config.json";
 
-export const checkJwt = (req: Request, res: Response, next: NextFunction) => {
+function checkJwt(req: Request, res: Response, next: NextFunction) {
   //Get the jwt token from the head
   const token = req.get("Authorization");
   console.log("token: "+token);
@@ -29,3 +29,5 @@ export const checkJwt = (req: Request, res: Response, next: NextFunction) => {
   //Call the next middleware or controller
   next();
 };
+
+export default checkJwt;

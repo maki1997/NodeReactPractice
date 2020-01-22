@@ -3,7 +3,7 @@ import express from "express";
 import {getManager} from "typeorm";
 import {User} from "../entity/User";
 import {Team} from "../entity/Team";
-import {UserRepository} from "../repository/UserRepository"
+import {UserCustomRepository} from "../repository/UserCustomRepository"
 
 export class UserController extends BaseController{
 
@@ -37,7 +37,7 @@ export class UserController extends BaseController{
   this.get("username/:username",async(request,response) => {
       const userRepo = getManager().getRepository(User);
       const param = request.params.username;
-      const user = await userRepo.query("Select * from user where username='"+param+"'");
+      const user = await userRepo.query("Select * from user where username like '"+param+"'");
       console.log(request.params.username);
       console.log(user);
       if (!user) {

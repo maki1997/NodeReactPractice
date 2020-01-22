@@ -23,7 +23,6 @@ export class AuthController extends BaseController{
       let user: User;
       try {
         user = await userRepository.findOneOrFail({ where: { username } });
-        console.log(JSON.stringify(user));
       } catch (error) {
         res.status(401).send();
       }

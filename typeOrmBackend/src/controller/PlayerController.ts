@@ -46,6 +46,15 @@ export class PlayerController extends BaseController{
       await playerRepo.save(newPlayer);
       response.send(newPlayer);
   });
+  // get players for specific team
+  this.get("team/:teamId", async (req, res) => {
+      const teamId = parseInt(req.params.teamId, null);
+      const teamWithPlayers = await this.teamCustomRepository.getPlayersOfTeam(teamId);
+      if (teamWithPlayers) {
+          return res.success(teamWithPlayers);
+      }
+      return res.notFound("Team does not exist.");
+  });
 
 
 }

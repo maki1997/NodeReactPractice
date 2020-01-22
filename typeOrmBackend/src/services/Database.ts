@@ -4,6 +4,9 @@ import {
     getManager,
     EntityManager
 } from "typeorm";
+import { TeamCustomRepository } from '../repository/TeamCustomRepository';
+import { UserCustomRepository } from '../repository/UserCustomRepository';
+import { PlayerCustomRepository } from '../repository/PlayerCustomRepository';
 
 export default class Database {
 
@@ -16,4 +19,28 @@ export default class Database {
         console.log("DB connected.");
     }
 
+    public static getTeamCustomRepository() {
+        if (Database.TeamRepository == null) {
+            Database.TeamRepository = getCustomRepository(TeamCustomRepository);
+        }
+        return Database.TeamRepository;
+    }
+
+    public static getUserCustomRepository() {
+        if (Database.UserRepository == null) {
+            Database.UserRepository = getCustomRepository(UserCustomRepository);
+        }
+        return Database.UserRepository;
+    }
+
+    public static getPlayerCustomRepository() {
+        if (Database.PlayerRepository == null) {
+            Database.PlayerRepository = getCustomRepository(PlayerCustomRepository);
+        }
+        return Database.PlayerRepository;
+    }
+
+    private static TeamRepository: TeamCustomRepository;
+    private static UserRepository: UserCustomRepository;
+    private static PlayerRepository: PlayerCustomRepository;
 }

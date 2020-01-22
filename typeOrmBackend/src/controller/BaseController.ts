@@ -1,9 +1,24 @@
 import express from "express";
 import Database from "../services/Database";
+import { TeamCustomRepository } from "../repository/TeamCustomRepository";
+import { UserCustomRepository } from "../repository/UserCustomRepository";
+import { PlayerCustomRepository } from "../repository/PlayerCustomRepository";
 
 export default abstract class BaseController {
 
     public router: express.Router;
+
+    public get teamCustomRepository(): TeamCustomRepository {
+        return Database.getTeamCustomRepository();
+    }
+
+    public get userCustomRepository(): UserCustomRepository {
+        return Database.getUserCustomRepository();
+    }
+
+    public get playerCustomRepository(): PlayerCustomRepository {
+        return Database.getPlayerCustomRepository();
+    }
 
     constructor(router: express.Router, protected baseRoute: string = "") {
         console.log('Initialization =>', this.constructor.name);

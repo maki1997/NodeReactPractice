@@ -3,7 +3,7 @@ import { getRepository } from "typeorm";
 import { User } from "../entity/User";
 import {getManager} from "typeorm";
 
-export const checkRole = (roles: Array<string>) => {
+function checkRole = (roles: Array<string>) => {
   return async (req: Request, res: Response, next: NextFunction) => {
     //Get the user ID from previous midleware
     const id = res.locals.jwtPayload.userId;
@@ -21,3 +21,5 @@ export const checkRole = (roles: Array<string>) => {
           console.log("cant add");};
   };
 };
+
+export default checkRole;
